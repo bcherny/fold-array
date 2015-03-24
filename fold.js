@@ -4,12 +4,17 @@ const _ = require ('lodash')
 function fold (as) {
 
   return as
+
+    // convert non-leaf sequence members to "-"
     .map (function (a, n) {
       return (as[n-1] + 1 == a) && (as[n+1] - 1 == a) ? '-' : a
     })
+
+    // drop sequential "-"s
     .reduce (function (prev, cur) {
       return _.tail(prev) == cur ? prev : prev.concat(cur)
     }, [])
+
     .join (',')
     .replace(/,-,/g, '-')
 
